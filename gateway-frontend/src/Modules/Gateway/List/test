@@ -1,0 +1,92 @@
+'use strict';
+
+const fs = require('fs');
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', function(inputStdin) {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', function() {
+    inputString = inputString.split('\n');
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
+}
+
+
+
+/*
+ * Complete the 'countSentences' function below.
+ *
+ * The function is expected to return a LONG_INTEGER_ARRAY.
+ * The function accepts following parameters:
+ *  1. STRING_ARRAY wordSet
+ *  2. STRING_ARRAY sentences
+ */
+
+function getWordSorted(word){
+    return word.split("").sort().join("");
+}
+function countSentences(wordSet, sentences) {
+    const wordMap = new Map();
+    let resArray = [];
+    wordSet.forEach((word)=>{
+       let sortedWord = getWordSorted(word);
+       if(!wordMap.get(sortedWord)){
+           wordMap.set(sortedWord,1);
+           }
+        else{
+           let prev_count = wordMap.get(sortedWord);
+           wordMap.set(sortedWord,prev_count+1);
+        }
+    });
+    sentences.forEach((sentence)=>{
+        let sentenceWords = sentence.split(" ");
+        let res = 1;
+        sentenceWords.forEach((word)=>{
+            let wordRoot = getWordSorted(word);
+            if(wordMap.get(wordRoot)!=1)
+                res = res * wordMap.get(wordRoot);
+        });
+        resArray.push(res)
+    })
+    console.log(wordMap)
+    return resArray;
+}
+
+function main() {
+    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+
+    const wordSetCount = parseInt(readLine().trim(), 10);
+
+    let wordSet = [];
+
+    for (let i = 0; i < wordSetCount; i++) {
+        const wordSetItem = readLine();
+        wordSet.push(wordSetItem);
+    }
+
+    const sentencesCount = parseInt(readLine().trim(), 10);
+
+    let sentences = [];
+
+    for (let i = 0; i < sentencesCount; i++) {
+        const sentencesItem = readLine();
+        sentences.push(sentencesItem);
+    }
+
+    const result = countSentences(wordSet, sentences);
+
+    ws.write(result.join('\n') + '\n');
+
+    ws.end();
+}
