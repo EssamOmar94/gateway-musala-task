@@ -18,14 +18,14 @@ services:
 
     # our environment variable
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "anas"
+      MONGO_INITDB_ROOT_USERNAME: "essam"
       MONGO_INITDB_ROOT_PASSWORD: "12345"
 
   # name is optional for our backend
   backend:
     # to build an image based on Dockerfile
     # it looks in this folder to find Dockerfile to build an image
-    build: ./backend
+    build: ./gateway-app-express
     # the port that we want to publish for backend
     ports:
       - "8080:8080"
@@ -38,14 +38,14 @@ services:
   frontend:
     # to build an image based on Dockerfile
     # it looks in this folder to find Dockerfile to build an image
-    build: ./task_management_client
+    build: ./gateway-frontend
 
     # the port that we want to publish for frontend
     ports:
       - "3000:3000"
     # add bind mount volume to keep have updated source code
     volumes:
-      - ./task_management_client/src:/app/src
+      - ./gateway-frontend/src:/app/src
     # allow interactive mode
     stdin_open: true
     tty: true
