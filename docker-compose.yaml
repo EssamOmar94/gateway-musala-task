@@ -17,9 +17,6 @@ services:
       - data:/data/db
 
     # our environment variable
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: "essam"
-      MONGO_INITDB_ROOT_PASSWORD: "12345"
 
   # name is optional for our backend
   backend:

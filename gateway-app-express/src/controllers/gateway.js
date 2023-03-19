@@ -24,6 +24,11 @@ exports.create = function (req, res) {
         res.status(200).send({
             statusCode: 200, message: 'Created Successfully', gateway_id: id,
         });
+    }).catch((err)=>{
+        console.log(err);
+        res.status(400).send({
+            statusCode: 400, message: err,
+        });
     });
 };
 

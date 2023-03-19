@@ -19,11 +19,8 @@ function connect() {
       .on('error', console.log)
       .on('disconnected', connect)
       .once('open', listen);
-  return mongoose.connect('mongodb://host.docker.internal:27017/musala-task', {
-    auth: {
-      username: "essam",
-      password: "12345",
-    },
+  return mongoose.connect(
+      'mongodb://host.docker.internal:27017/task-mymongodb-1', {
     authSource: "admin",
     keepAlive: 1,
     useNewUrlParser: true,
